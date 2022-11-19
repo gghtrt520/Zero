@@ -1,0 +1,35 @@
+kind: pipeline
+name: CICD
+type: docker
+
+steps:
+
+- name: push-api
+  image: gghtrt520/kaniko:latest
+  pull: if-not-exists
+  settings:
+    registry: http://127.0.0.1:8082
+    repo: 127.0.0.1:8082/docker-sase/kaniko
+    dockerfile: ./app/user/api/Dockerfile
+    username: 1111
+    password: 1111
+    tags:
+      - "v1"
+    when:
+      branch: master
+      event: [ push ]
+
+- name: push-rpc
+  image: plugins/docker
+  pull: if-not-exists
+  settings:
+    registry: http://127.0.0.1:8082
+    repo: docker-sase/kaniko
+    dockerfile: ./app/user/rpc/Dockerfile
+    username: 1111
+    password: 1111
+    tags:
+      - "v1"
+    when:
+      branch: master
+      event: [ push ]
