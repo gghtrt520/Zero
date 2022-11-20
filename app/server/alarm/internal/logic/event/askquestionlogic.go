@@ -6,6 +6,7 @@ import (
 	"zlei/app/server/alarm/internal/svc"
 	"zlei/app/server/alarm/proto"
 
+	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,7 +25,7 @@ func NewAskQuestionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AskQu
 }
 
 func (l *AskQuestionLogic) AskQuestion(in *proto.EventReq) (*proto.EventResp, error) {
-	// todo: add your logic here and delete this line
-
+	names := lo.Uniq([]string{"Samuel", "John", "Samuel"})
+	logx.Info(names)
 	return &proto.EventResp{}, nil
 }
