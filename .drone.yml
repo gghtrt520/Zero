@@ -1,5 +1,5 @@
 kind: pipeline
-name: Go-Zero
+name: build
 type: docker
 
 steps:
@@ -33,3 +33,25 @@ steps:
     when:
       branch: master
       event: [ push ]
+
+---
+kind: pipeline
+name: deploy
+type: docker
+
+steps:
+- name: deploy-user-api
+  image: ghcr.io/bh90210/dron8s:latest
+  pull: if-not-exists
+  settings:
+    yaml: ./deploy/user-api.yaml
+    kubeconfig:
+      from_secret: kubeconfig
+
+- name: deploy-alarm-rpc
+  image: ghcr.io/bh90210/dron8s:latest
+  pull: if-not-exists
+  settings:
+    yaml: ./deploy/user-rpc.yaml
+    kubeconfig:
+      from_secret: kubeconfig
