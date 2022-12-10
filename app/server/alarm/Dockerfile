@@ -1,6 +1,7 @@
 FROM gghtrt520/golang:alpine AS builder
 
 
+WORKDIR /build
 ADD go.mod .
 ADD go.sum .
 RUN go mod download
