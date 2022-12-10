@@ -8,13 +8,14 @@ steps:
   image: gghtrt520/kaniko:latest
   pull: if-not-exists
   settings:
+    repo: gghtrt520/zero
     dockerfile: ./app/rest/user/Dockerfile
     username: 
-      from_secret: username
+      from_secret: user
     password: 
       from_secret: password
     tags:
-      - "v1"
+      - "user-api"
     when:
       branch: master
       event: [ push ]
@@ -23,35 +24,36 @@ steps:
   image: plugins/docker
   pull: if-not-exists
   settings:
+    repo: gghtrt520/zero
     dockerfile: ./app/server/alarm/Dockerfile
     username: 
-      from_secret: username
+      from_secret: user
     password: 
       from_secret: password
     tags:
-      - "v1"
+      - "alarm-rpc"
     when:
       branch: master
       event: [ push ]
 
----
-kind: pipeline
-name: deploy
-type: docker
-
-steps:
-- name: deploy-user-api
-  image: ghcr.io/bh90210/dron8s:latest
-  pull: if-not-exists
-  settings:
-    yaml: ./deploy/user-api.yaml
-    kubeconfig:
-      from_secret: kubeconfig
-
-- name: deploy-alarm-rpc
-  image: ghcr.io/bh90210/dron8s:latest
-  pull: if-not-exists
-  settings:
-    yaml: ./deploy/user-rpc.yaml
-    kubeconfig:
-      from_secret: kubeconfig
+#---
+#kind: pipeline
+#name: deploy
+#type: docker
+#
+#steps:
+#- name: deploy-user-api
+#  image: ghcr.io/bh90210/dron8s:latest
+#  pull: if-not-exists
+#  settings:
+#    yaml: ./deploy/user-api.yaml
+#    kubeconfig:
+#      from_secret: kubeconfig
+#
+#- name: deploy-alarm-rpc
+#  image: ghcr.io/bh90210/dron8s:latest
+#  pull: if-not-exists
+#  settings:
+#    yaml: ./deploy/user-rpc.yaml
+#    kubeconfig:
+#      from_secret: kubeconfig
