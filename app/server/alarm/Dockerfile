@@ -9,7 +9,7 @@ RUN go mod download
 COPY . .
 COPY ./app/server/alarm/etc /app/etc
 
-RUN go build -ldflags="-s -w" -o /app/alarm .
+RUN go build -ldflags="-s -w" -o /app/alarm ./app/server/alarm/alarm.go
 
 
 FROM scratch

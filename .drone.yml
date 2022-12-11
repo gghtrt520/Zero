@@ -21,7 +21,7 @@ steps:
       event: [ push ]
 
 - name: alarm-rpc
-  image: plugins/docker
+  image: gghtrt520/kaniko:latest
   pull: if-not-exists
   settings:
     repo: gghtrt520/zero
