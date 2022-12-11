@@ -7,8 +7,8 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 COPY ./app/rest/user/etc /app/etc
-RUN cd ./app/rest/user
-RUN go build -ldflags="-s -w" -o /app/user .
+
+RUN go build -ldflags="-s -w" -o /app/user ./app/rest/user/user.go
 
 
 FROM scratch
