@@ -8,7 +8,7 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 COPY ./app/server/alarm/etc /app/etc
-RUN go build -ldflags="-s -w" -o /app/server/alarm .
+RUN go build -ldflags="-s -w" -o /app/server/alarm/alarm.go .
 
 
 FROM scratch
