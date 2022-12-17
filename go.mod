@@ -3,6 +3,7 @@ module zlei
 go 1.18
 
 require (
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/hibiken/asynq v0.23.0
 	github.com/samber/lo v1.35.0
 	github.com/spf13/cobra v1.6.1
