@@ -27,7 +27,7 @@ func (h *BindRequest) Do(c *sdk.Context) (err error) {
 
 // Do 校验参数的逻辑
 func (h *Send) Do(c *sdk.Context) (err error) {
-	resp, err := c.Request.Send()
+	resp, err := c.Send()
 	if err != nil {
 		return err
 	}

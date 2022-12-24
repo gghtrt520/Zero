@@ -1,6 +1,10 @@
 package sdk
 
-import "github.com/go-resty/resty/v2"
+import (
+	"errors"
+
+	"github.com/go-resty/resty/v2"
+)
 
 type Context struct {
 	*resty.Request
@@ -63,7 +67,11 @@ func (h *Client) Do(c *Context) (err error) {
 func NewSdk() *Client {
 	return &Client{
 		Context: &Context{
-			Request: resty.New().R(),
+			Request: resty.New().OnError(func(r *resty.Request, err error) {
+				if v, ok := err.(*resty.ResponseError); ok {
+					v.Err = errors.New("网络连接错误")
+				}
+			}).R(),
 		},
 	}
 }
