@@ -3,7 +3,6 @@ name: build
 type: docker
 
 steps:
-
 - name: user-api
   image: gghtrt520/kaniko:latest
   pull: if-not-exists
@@ -36,6 +35,49 @@ steps:
       branch: master
       event: [ push ]
 
+---
+kind: pipeline
+type: docker
+name: amd64-docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: manifest-docker
+    pull: always
+    image: gghtrt520/kaniko:latest
+    settings:
+      auto_tag: true
+      ignore_missing: true
+      username:
+        from_secret: user
+      password:
+        from_secret: password
+      spec: app/server/alarm/manifest.tmpl
+
+---
+kind: pipeline
+type: docker
+name: arm64-docker
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: manifest-docker
+    pull: always
+    image: gghtrt520/kaniko:latest
+    settings:
+      auto_tag: true
+      ignore_missing: true
+      username:
+        from_secret: user
+      password:
+        from_secret: password
+      spec: app/server/alarm/manifest.tmpl
 #---
 #kind: pipeline
 #name: deploy
